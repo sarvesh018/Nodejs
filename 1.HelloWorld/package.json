@@ -1,0 +1,12 @@
+{
+  "name": "1.helloworld",
+  "version": "1.0.0",
+  "description": "We can add our own scripts in the scripts section to run it directly in terminal",
+  "main": "1.helloWorld.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node 1.helloWorld.js" 
+  },
+  "author": "",
+  "license": "ISC"
+}
