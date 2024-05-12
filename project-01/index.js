@@ -7,6 +7,22 @@ const PORT = 8000;
 
 // Routes
 
+// MIDDLEWARE
+app.use((req, res, next) => {
+    console.log("I'm Middleware");
+    req.myUserName = "Sarvesh";
+    next();
+})
+
+app.use((req, res, next) => {
+    console.log("I'm middleware by ", req.myUserName);  // creating log using middleware
+
+    fs.appendFile("log.txt", `\n${Date.now()}: ${req.method}: ${req.path}`, (err, data) => {
+        next();
+    });
+    
+})
+
 // REST API
 app.get("/api/users", (req, res) => {                       // pre appending api
     return res.json(users);
@@ -31,6 +47,7 @@ app.get("/users", (req, res)=>{
 
 // Middleware - Plugin
 app.use(express.urlencoded({extended : false}));
+
 
 app.post("/api/users", (req, res) => {
     // TODO create new user
