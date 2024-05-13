@@ -25,6 +25,7 @@ app.use((req, res, next) => {
 
 // REST API
 app.get("/api/users", (req, res) => {                       // pre appending api
+    res.setHeader("X-myName", "Sarvesh");                   // append-X for custom headers
     return res.json(users);
 });
 
@@ -54,7 +55,7 @@ app.post("/api/users", (req, res) => {
     const body = req.body;
     users.push({...body, id: users.length + 1});
     fs.writeFile("./MOCK_DATA.json", JSON.stringify(users), (err, data) => {
-        return res.json({status:"success", id:users.length});
+        return res.status(201).json({status:"success", id:users.length});
     })
     return res.json({status: "pending"});
 });
@@ -76,6 +77,9 @@ app.route("/api/users/:id")
 .get((req, res)=>{
     const id = Number(req.params.id);
     const user = users.find((user) => user.id===id);
+
+    if(!user) return res.status(404).json({status: "User not Found"});
+
     return res.json(user);
 })
 .patch((req, res) => {
